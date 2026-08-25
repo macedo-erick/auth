@@ -16,6 +16,7 @@ services:
       - 'host.docker.internal:host-gateway'
       - 'planelyx.com:host-gateway'
       - 'listryx.com:host-gateway'
+      - 'stampyx.com:host-gateway'
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://host.docker.internal:5432/keycloak
@@ -35,6 +36,17 @@ services:
       LISTRYX_UI_ORIGIN: https://listryx.com
       LISTRYX_UI_BASE_URL: https://listryx.com/ui
       LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET:?LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET is not set}
+      STAMPYX_UI_ORIGIN: https://stampyx.com
+      STAMPYX_UI_BASE_URL: https://stampyx.com/ui
+      STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET:?STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET is not set}
+      PROVISIONING_STAMPYX_URL: https://stampyx.com/internal/keycloak/user-registered
+      PROVISIONING_STAMPYX_SECRET: ${STAMPYX_PROVISIONING_SECRET:?STAMPYX_PROVISIONING_SECRET is not set}
+      # Stampyx is the mail server, so it is the realm that finally gets working email
+      # verification. These only take effect on first import of the stampyx realm.
+      STAMPYX_SMTP_HOST: mail.stampyx.com
+      STAMPYX_SMTP_PORT: '587'
+      STAMPYX_SMTP_FROM: keycloak@stampyx.com
+      STAMPYX_SMTP_PASSWORD: ${STAMPYX_SMTP_PASSWORD:?STAMPYX_SMTP_PASSWORD is not set}
     healthcheck:
       test:
         [
