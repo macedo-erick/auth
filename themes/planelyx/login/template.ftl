@@ -52,7 +52,9 @@
         </#list>
     </#if>
     <title>${msg("loginTitle",(realm.displayName!''))}</title>
-    <link rel="icon" href="${url.resourcesPath}/img/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="${url.resourcesPath}/img/favicon.svg" />
+    <link rel="icon" sizes="any" href="${url.resourcesPath}/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="${url.resourcesPath}/img/apple-touch-icon.png" />
     <#if properties.stylesCommon?has_content>
         <#list properties.stylesCommon?split(' ') as style>
             <link href="${url.resourcesCommonPath}/${style}" rel="stylesheet" />

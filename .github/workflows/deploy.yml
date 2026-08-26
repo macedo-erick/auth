@@ -29,6 +29,8 @@ env:
   ADMIN_URL: https://auth.macedosoftware.com
   ISSUER_CHECKS: |
     https://planelyx.com planelyx
+    https://listryx.com listryx
+    https://stampyx.com stampyx
     https://auth.macedosoftware.com planelyx
   NEIGHBOUR_URL: https://monitoring.macedosoftware.com/login
   PAYLOAD: compose.prod.yaml
@@ -89,6 +91,9 @@ jobs:
           KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.KEYCLOAK_ADMIN_CLIENT_SECRET }}
           PLANELYX_PROVISIONING_SECRET: ${{ secrets.PLANELYX_PROVISIONING_SECRET }}
           LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+          STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+          STAMPYX_PROVISIONING_SECRET: ${{ secrets.STAMPYX_PROVISIONING_SECRET }}
+          STAMPYX_SMTP_PASSWORD: ${{ secrets.STAMPYX_SMTP_PASSWORD }}
           AUTH_LOG_LEVEL: ${{ vars.AUTH_LOG_LEVEL }}
         run: |
           set -euo pipefail
@@ -99,7 +104,7 @@ jobs:
               fail=1
           fi
 
-          for name in GCP_PROJECT_ID KC_DB_PASSWORD KC_ADMIN KC_ADMIN_PASSWORD KEYCLOAK_ADMIN_CLIENT_SECRET PLANELYX_PROVISIONING_SECRET LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET; do
+          for name in GCP_PROJECT_ID KC_DB_PASSWORD KC_ADMIN KC_ADMIN_PASSWORD KEYCLOAK_ADMIN_CLIENT_SECRET PLANELYX_PROVISIONING_SECRET LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET STAMPYX_PROVISIONING_SECRET STAMPYX_SMTP_PASSWORD; do
               value=${!name}
               if [[ -z $value ]]; then
                   echo "::error::Repo secret $name is empty or not set. See VPS_SETUP.md §6."
@@ -156,6 +161,9 @@ jobs:
           KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.KEYCLOAK_ADMIN_CLIENT_SECRET }}
           PLANELYX_PROVISIONING_SECRET: ${{ secrets.PLANELYX_PROVISIONING_SECRET }}
           LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+          STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+          STAMPYX_PROVISIONING_SECRET: ${{ secrets.STAMPYX_PROVISIONING_SECRET }}
+          STAMPYX_SMTP_PASSWORD: ${{ secrets.STAMPYX_SMTP_PASSWORD }}
         run: |
           set -euo pipefail
 
@@ -180,7 +188,7 @@ jobs:
 
           fail=0
 
-          for name in KC_DB_PASSWORD KC_ADMIN KC_ADMIN_PASSWORD KEYCLOAK_ADMIN_CLIENT_SECRET PLANELYX_PROVISIONING_SECRET LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET; do
+          for name in KC_DB_PASSWORD KC_ADMIN KC_ADMIN_PASSWORD KEYCLOAK_ADMIN_CLIENT_SECRET PLANELYX_PROVISIONING_SECRET LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET STAMPYX_PROVISIONING_SECRET STAMPYX_SMTP_PASSWORD; do
               on_vps=$(read_env_key "$name")
               if [[ $on_vps != "${!name}" ]]; then
                   echo "::error::Secret drift: $name differs between the repo secret and the VPS .env. If this is a deliberate rotation, re-run from Actions with 'Allow credentials to differ' ticked — and make sure the Postgres role, or planelyx-infra's copy of the shared secret, was changed to match."
@@ -200,6 +208,9 @@ jobs:
           KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.KEYCLOAK_ADMIN_CLIENT_SECRET }}
           PLANELYX_PROVISIONING_SECRET: ${{ secrets.PLANELYX_PROVISIONING_SECRET }}
           LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+          STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET: ${{ secrets.STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET }}
+          STAMPYX_PROVISIONING_SECRET: ${{ secrets.STAMPYX_PROVISIONING_SECRET }}
+          STAMPYX_SMTP_PASSWORD: ${{ secrets.STAMPYX_SMTP_PASSWORD }}
           AUTH_LOG_LEVEL: ${{ vars.AUTH_LOG_LEVEL }}
         run: |
           set -euo pipefail
@@ -215,6 +226,9 @@ jobs:
               printf "KEYCLOAK_ADMIN_CLIENT_SECRET='%s'\n" "$KEYCLOAK_ADMIN_CLIENT_SECRET"
               printf "PLANELYX_PROVISIONING_SECRET='%s'\n" "$PLANELYX_PROVISIONING_SECRET"
               printf "LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET='%s'\n" "$LISTRYX_KEYCLOAK_ADMIN_CLIENT_SECRET"
+              printf "STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET='%s'\n" "$STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET"
+              printf "STAMPYX_PROVISIONING_SECRET='%s'\n" "$STAMPYX_PROVISIONING_SECRET"
+              printf "STAMPYX_SMTP_PASSWORD='%s'\n" "$STAMPYX_SMTP_PASSWORD"
               printf 'AUTH_LOG_LEVEL=%s\n' "${AUTH_LOG_LEVEL:-info}"
           )
 

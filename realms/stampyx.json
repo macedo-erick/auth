@@ -1,0 +1,69 @@
+{
+  "realm": "stampyx",
+  "enabled": true,
+  "displayName": "Stampyx",
+  "displayNameHtml": "Stampyx",
+  "loginTheme": "stampyx",
+  "sslRequired": "external",
+  "accessTokenLifespan": 3600,
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "resetPasswordAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "verifyEmail": false,
+  "passwordPolicy": "length(12) and digits(1) and lowerCase(1) and upperCase(1) and specialChars(1) and notUsername and notEmail",
+  "smtpServer": {
+    "host": "${STAMPYX_SMTP_HOST:mail.stampyx.com}",
+    "port": "${STAMPYX_SMTP_PORT:587}",
+    "from": "${STAMPYX_SMTP_FROM:keycloak@stampyx.com}",
+    "fromDisplayName": "Stampyx",
+    "replyTo": "${STAMPYX_SMTP_FROM:keycloak@stampyx.com}",
+    "starttls": "true",
+    "auth": "true",
+    "user": "${STAMPYX_SMTP_FROM:keycloak@stampyx.com}",
+    "password": "${STAMPYX_SMTP_PASSWORD:local-dev-secret}"
+  },
+  "eventsListeners": ["jboss-logging", "planelyx-provisioning"],
+  "clients": [
+    {
+      "clientId": "stampyx-ui",
+      "enabled": true,
+      "description": "The Angular panel. Public client with PKCE; the confidential counterpart `stampyx-api-admin` is what stampyx-api uses to reach the Admin API.",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "rootUrl": "${STAMPYX_UI_BASE_URL:http://localhost:4202}",
+      "baseUrl": "${STAMPYX_UI_BASE_URL:http://localhost:4202}/",
+      "redirectUris": ["${STAMPYX_UI_BASE_URL:http://localhost:4202}/*"],
+      "webOrigins": ["${STAMPYX_UI_ORIGIN:http://localhost:4202}"],
+      "attributes": {
+        "post.logout.redirect.uris": "${STAMPYX_UI_BASE_URL:http://localhost:4202}/*",
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "stampyx-api-admin",
+      "enabled": true,
+      "description": "Service account the API uses to read the profile of a user the provisioning callback just announced.",
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "secret": "${STAMPYX_KEYCLOAK_ADMIN_CLIENT_SECRET:local-dev-secret}"
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-stampyx-api-admin",
+      "enabled": true,
+      "serviceAccountClientId": "stampyx-api-admin",
+      "clientRoles": {
+        "realm-management": ["view-users", "manage-users"]
+      }
+    }
+  ]
+}
