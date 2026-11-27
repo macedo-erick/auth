@@ -17,6 +17,7 @@ services:
       - 'planelyx.com:host-gateway'
       - 'listryx.com:host-gateway'
       - 'stampyx.com:host-gateway'
+      - 'bingyx.com:host-gateway'
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://host.docker.internal:5432/keycloak
@@ -47,6 +48,9 @@ services:
       STAMPYX_SMTP_PORT: '587'
       STAMPYX_SMTP_FROM: keycloak@stampyx.com
       STAMPYX_SMTP_PASSWORD: ${STAMPYX_SMTP_PASSWORD:?STAMPYX_SMTP_PASSWORD is not set}
+      # Bingyx has no -api-admin client: its API only verifies tokens, so there is no secret here.
+      BINGYX_UI_ORIGIN: https://bingyx.com
+      BINGYX_UI_BASE_URL: https://bingyx.com/ui
     healthcheck:
       test:
         [

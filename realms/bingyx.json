@@ -1,0 +1,48 @@
+{
+  "realm": "bingyx",
+  "enabled": true,
+  "displayName": "Bingyx",
+  "displayNameHtml": "Bingyx",
+  "loginTheme": "bingyx",
+  "sslRequired": "external",
+  "accessTokenLifespan": 3600,
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": false,
+  "resetPasswordAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "verifyEmail": false,
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "pt-BR",
+    "en"
+  ],
+  "defaultLocale": "pt-BR",
+  "passwordPolicy": "length(12) and digits(1) and lowerCase(1) and upperCase(1) and specialChars(1) and notUsername and notEmail",
+  "eventsListeners": [
+    "jboss-logging"
+  ],
+  "clients": [
+    {
+      "clientId": "bingyx-ui",
+      "enabled": true,
+      "description": "The Angular app. Public client with PKCE, used only by the organiser; players join through an invitation link and never sign in here.",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "rootUrl": "${BINGYX_UI_BASE_URL:http://localhost:4203}",
+      "redirectUris": [
+        "${BINGYX_UI_BASE_URL:http://localhost:4203}/*"
+      ],
+      "webOrigins": [
+        "${BINGYX_UI_ORIGIN:http://localhost:4203}"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "${BINGYX_UI_BASE_URL:http://localhost:4203}/*",
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ]
+}
