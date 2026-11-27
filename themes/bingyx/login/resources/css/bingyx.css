@@ -1,0 +1,446 @@
+/* Loaded after the parent theme's css/styles.css, so everything here wins. The palette is the
+   app's own (bingyx-ui src/styles.css): pine night, gold star, cream card, Christmas red. */
+
+:root {
+  --bx-pine: #14532d;
+  --bx-pine-deep: #0b2318;
+  --bx-pine-ink: #d6e6da;
+  --bx-gold: #e8b931;
+  --bx-cream: #fff8ee;
+  --bx-line: #d9cdb6;
+  --bx-text: #1f2a22;
+  --bx-muted: #5c5a4e;
+  --bx-red: #b3122b;
+  --bx-red-dark: #8e0e22;
+  --bx-red-soft: #fde7ea;
+  --bx-ok-soft: #e3f0e6;
+  --bx-display: "Fraunces", Georgia, serif;
+  --bx-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html.bx-html,
+body.bx-body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bx-pine-deep) !important;
+  background-image: none !important;
+  color: var(--bx-cream);
+  font-family: var(--bx-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Two layers of still dots and a slow drift; the same night sky as the join screen. */
+.bx-snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgb(255 248 238 / 0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 120px 80px, rgb(255 248 238 / 0.4), transparent 60%),
+    radial-gradient(2.5px 2.5px at 200px 150px, rgb(255 248 238 / 0.35), transparent 60%),
+    radial-gradient(1.5px 1.5px at 60px 190px, rgb(255 248 238 / 0.45), transparent 60%),
+    radial-gradient(2px 2px at 260px 40px, rgb(255 248 238 / 0.3), transparent 60%);
+  background-size: 300px 220px;
+  animation: bx-snow 40s linear infinite;
+}
+
+@keyframes bx-snow {
+  to {
+    background-position: 60px 880px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bx-snow {
+    animation: none;
+  }
+}
+
+.bx-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  padding: 48px 16px 24px;
+  box-sizing: border-box;
+  gap: 28px;
+}
+
+.bx-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Header */
+
+.bx-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.bx-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bx-cream);
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.bx-star {
+  width: 30px;
+  height: 30px;
+  fill: var(--bx-gold);
+}
+
+.bx-brand-name {
+  font-family: var(--bx-display);
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.3px;
+}
+
+.bx-tagline {
+  margin: 0;
+  font-size: 14px;
+  color: var(--bx-pine-ink);
+}
+
+/* Card */
+
+.bx-card {
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+  padding: 32px 28px 28px;
+  border-radius: 28px;
+  background: var(--bx-cream);
+  color: var(--bx-text);
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bx-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bx-title {
+  margin: 0;
+  font-family: var(--bx-display);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.1;
+  color: var(--bx-pine);
+}
+
+.bx-subtitle {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--bx-muted);
+}
+
+.bx-identity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--bx-ok-soft);
+  font-size: 14px;
+}
+
+.bx-identity-value {
+  font-weight: 600;
+  color: var(--bx-pine);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Form */
+
+.bx-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bx-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 420px) {
+  .bx-pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+}
+
+.bx-pair > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bx-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bx-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bx-text);
+}
+
+.bx-affix {
+  position: relative;
+  display: flex;
+}
+
+.bx-input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1px solid var(--bx-line);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--bx-text);
+  font: inherit;
+  font-size: 16px;
+  transition: border-color 120ms, box-shadow 120ms;
+}
+
+.bx-affix .bx-input {
+  padding-right: 48px;
+}
+
+.bx-input::placeholder {
+  color: #8f8370;
+}
+
+.bx-input:focus {
+  outline: none;
+  border-color: var(--bx-red);
+  box-shadow: 0 0 0 3px rgb(179 18 43 / 0.18);
+}
+
+.bx-field--error .bx-input {
+  border-color: var(--bx-red);
+}
+
+.bx-reveal {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--bx-muted);
+  cursor: pointer;
+}
+
+.bx-reveal svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bx-reveal[aria-pressed="true"] {
+  color: var(--bx-red);
+}
+
+.bx-reveal:focus-visible,
+.bx-btn:focus-visible,
+.bx-link:focus-visible,
+.bx-link-btn:focus-visible {
+  outline: 2px solid var(--bx-red);
+  outline-offset: 2px;
+}
+
+.bx-error {
+  margin: -6px 0 0;
+  font-size: 13px;
+  color: var(--bx-red);
+}
+
+.bx-help {
+  margin: -6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--bx-muted);
+}
+
+.bx-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.bx-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bx-text);
+  cursor: pointer;
+}
+
+.bx-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--bx-pine);
+}
+
+/* Buttons and links */
+
+.bx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  background: var(--bx-red);
+  color: #ffffff;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 5px 0 var(--bx-red-dark);
+  cursor: pointer;
+  transition: transform 80ms, box-shadow 80ms, background 120ms;
+}
+
+.bx-btn:hover {
+  background: var(--bx-red-dark);
+  color: #ffffff;
+}
+
+.bx-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--bx-red-dark);
+}
+
+.bx-btn--ghost {
+  background: #ffffff;
+  color: var(--bx-pine);
+  border: 1px solid var(--bx-line);
+  box-shadow: none;
+}
+
+.bx-link {
+  color: var(--bx-pine);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bx-link:hover {
+  color: var(--bx-red);
+}
+
+.bx-link-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--bx-pine);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bx-alt {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--bx-muted);
+}
+
+.bx-social {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bx-info {
+  font-size: 14px;
+  color: var(--bx-muted);
+}
+
+/* Messages */
+
+.bx-alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  background: var(--bx-ok-soft);
+  color: var(--bx-pine);
+}
+
+.bx-alert--error {
+  background: var(--bx-red-soft);
+  color: var(--bx-red-dark);
+}
+
+.bx-alert--warning {
+  background: #fff3d1;
+  color: #5a4307;
+}
+
+/* Footer */
+
+.bx-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--bx-pine-ink);
+}
+
+.bx-locale select {
+  appearance: none;
+  padding: 6px 28px 6px 12px;
+  border: 1px solid rgb(214 230 218 / 0.35);
+  border-radius: 999px;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23d6e6da' stroke-width='1.5'/%3E%3C/svg%3E")
+    no-repeat right 10px center / 10px;
+  color: var(--bx-pine-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.bx-locale select option {
+  color: var(--bx-text);
+}
